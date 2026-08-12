@@ -28,16 +28,16 @@ export default function Home() {
       {/* Header */}
       <header className="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative group">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="relative group shrink-0">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300" />
-              <img src="/logo.png" className="relative h-11 w-11 rounded-full object-cover border border-slate-800" alt="CRR Logo" />
+              <img src="/logo.png" className="relative h-9 w-9 sm:h-11 sm:w-11 rounded-full object-cover border border-slate-800" alt="CRR Logo" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-sm sm:text-base tracking-wider text-slate-100 uppercase">
+              <span className="font-black text-xs sm:text-base tracking-wider text-slate-100 uppercase">
                 CRR-Attendence
               </span>
-              <span className="text-[9px] text-indigo-400 font-bold uppercase tracking-widest -mt-0.5">
+              <span className="text-[7px] sm:text-[9px] text-indigo-400 font-bold uppercase tracking-widest -mt-0.5">
                 Chennai Radiance Raisers
               </span>
             </div>
@@ -45,12 +45,12 @@ export default function Home() {
           <div>
             <Link
               href="/login"
-              className="relative inline-flex items-center justify-center py-2.5 px-6 rounded-xl font-bold text-sm text-white group overflow-hidden transition-all duration-300"
+              className="relative inline-flex items-center justify-center py-2 px-4 sm:py-2.5 sm:px-6 rounded-xl font-bold text-xs sm:text-sm text-white group overflow-hidden transition-all duration-300 shrink-0"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl" />
               <span className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative flex items-center gap-1.5">
-                Dashboard Sign In <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              <span className="relative flex items-center gap-1 sm:gap-1.5">
+                <span className="hidden sm:inline">Dashboard </span>Sign In <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-0.5" />
               </span>
             </Link>
           </div>
@@ -111,15 +111,15 @@ export default function Home() {
             <span className="block text-3xl sm:text-4xl font-extrabold text-slate-100">100%</span>
             <span className="block text-[10px] sm:text-xs text-indigo-400 font-bold uppercase tracking-wider mt-1.5">Secure QR Signatures</span>
           </div>
-          <div className="text-center border-l border-slate-900">
+          <div className="text-center md:border-l md:border-slate-900">
             <span className="block text-3xl sm:text-4xl font-extrabold text-slate-100">Instant</span>
             <span className="block text-[10px] sm:text-xs text-indigo-400 font-bold uppercase tracking-wider mt-1.5">Check-In Resolving</span>
           </div>
-          <div className="text-center border-l border-slate-900">
+          <div className="text-center md:border-l md:border-slate-900">
             <span className="block text-3xl sm:text-4xl font-extrabold text-slate-100">Auto</span>
             <span className="block text-[10px] sm:text-xs text-indigo-400 font-bold uppercase tracking-wider mt-1.5">Leaderboard Tracking</span>
           </div>
-          <div className="text-center border-l border-slate-900">
+          <div className="text-center md:border-l md:border-slate-900">
             <span className="block text-3xl sm:text-4xl font-extrabold text-slate-100">PDF</span>
             <span className="block text-[10px] sm:text-xs text-indigo-400 font-bold uppercase tracking-wider mt-1.5">Batch Card Exports</span>
           </div>
