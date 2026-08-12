@@ -184,22 +184,14 @@ export function AdminNavigation({ admin, children }: AdminNavigationProps) {
       </aside>
 
       {/* Main Container */}
-      <div className="flex-1 flex flex-col overflow-hidden w-full">
+      <div className="flex-1 flex flex-col overflow-hidden w-full relative">
         {/* Header */}
         <header className="h-16 border-b border-slate-800 flex items-center justify-between px-4 lg:px-8 bg-slate-900/40 backdrop-blur-md shrink-0">
           <div className="flex items-center gap-3">
-            {/* Mobile Hamburger Toggle Button */}
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white lg:hidden active:scale-95 transition-all"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-
             <div className="flex items-center gap-2">
               <span className="text-slate-400 text-sm hidden sm:inline">Dashboard</span>
               <span className="text-slate-600 hidden sm:inline">/</span>
-              <span className="text-slate-200 font-medium text-sm sm:text-base truncate max-w-[120px] sm:max-w-none">{getPageTitle()}</span>
+              <span className="text-slate-200 font-semibold text-sm sm:text-base truncate max-w-[150px] sm:max-w-none">{getPageTitle()}</span>
             </div>
           </div>
           
@@ -212,9 +204,71 @@ export function AdminNavigation({ admin, children }: AdminNavigationProps) {
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-slate-950 w-full">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-slate-950 w-full pb-24 lg:pb-8">
           {children}
         </main>
+
+        {/* Bottom Tab Bar (mobile only: lg hidden) */}
+        <div className="fixed bottom-0 left-0 right-0 h-16 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 flex items-center justify-around z-40 lg:hidden px-4 pb-safe select-none">
+          {/* Tab 1: Dashboard */}
+          <Link
+            href="/admin"
+            className={`flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+              pathname === '/admin' ? 'text-indigo-400 font-black' : 'text-slate-400 hover:text-slate-200 font-medium'
+            }`}
+          >
+            <LayoutDashboard className="h-5 w-5" />
+            <span className="text-[9px] mt-1 tracking-tight">Home</span>
+          </Link>
+
+          {/* Tab 2: Events */}
+          <Link
+            href="/admin/events"
+            className={`flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+              pathname === '/admin/events' ? 'text-indigo-400 font-black' : 'text-slate-400 hover:text-slate-200 font-medium'
+            }`}
+          >
+            <Calendar className="h-5 w-5" />
+            <span className="text-[9px] mt-1 tracking-tight">Events</span>
+          </Link>
+
+          {/* Tab 3: Scan (Floating circular highlight!) */}
+          <Link
+            href="/admin/scanner"
+            className="flex flex-col items-center justify-center -mt-6 relative z-10 shrink-0 select-none"
+          >
+            <div className="h-14 w-14 rounded-full bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-600/30 border-4 border-slate-950 text-white transform active:scale-95 transition-all">
+              <QrCode className="h-6 w-6" />
+            </div>
+            <span className={`text-[9px] font-black tracking-wide mt-1.5 uppercase ${
+              pathname === '/admin/scanner' ? 'text-indigo-400' : 'text-slate-400'
+            }`}>
+              Scan
+            </span>
+          </Link>
+
+          {/* Tab 4: Leaderboard */}
+          <Link
+            href="/admin/leaderboard/monthly"
+            className={`flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+              pathname.startsWith('/admin/leaderboard') ? 'text-indigo-400 font-black' : 'text-slate-400 hover:text-slate-200 font-medium'
+            }`}
+          >
+            <Trophy className="h-5 w-5" />
+            <span className="text-[9px] mt-1 tracking-tight">Trophy</span>
+          </Link>
+
+          {/* Tab 5: More Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className={`flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
+              mobileMenuOpen ? 'text-indigo-400 font-black' : 'text-slate-400 hover:text-slate-200 font-medium'
+            }`}
+          >
+            <Menu className="h-5 w-5" />
+            <span className="text-[9px] mt-1 tracking-tight">More</span>
+          </button>
+        </div>
       </div>
     </div>
   );
