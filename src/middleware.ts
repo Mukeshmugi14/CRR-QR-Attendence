@@ -8,40 +8,57 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-          response = NextResponse.next({
-            request,
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
-  );
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const isLoginPage = request.nextUrl.pathname.startsWith('/login');
-  const isAdminPage = request.nextUrl.pathname.startsWith('/admin');
-
-  if (isAdminPage && !user) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  // Prevent crashing if environment variables are missing in Vercel
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error("CRITICAL ERROR: Supabase environment variables are missing in Vercel. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel Project Settings.");
+    return response;
   }
 
-  if (isLoginPage && user) {
-    return NextResponse.redirect(new URL('/admin', request.url));
+  try {
+    const supabase = createServerClient(
+      supabaseUrl,
+      supabaseAnonKey,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            try {
+              cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+              response = NextResponse.next({
+                request,
+              });
+              cookiesToSet.forEach(({ name, value, options }) =>
+                response.cookies.set(name, value, options)
+              );
+            } catch (cookieErr) {
+              console.warn("Middleware cookie write warning:", cookieErr);
+            }
+          },
+        },
+      }
+    );
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const isLoginPage = request.nextUrl.pathname.startsWith('/login');
+    const isAdminPage = request.nextUrl.pathname.startsWith('/admin');
+
+    if (isAdminPage && !user) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+
+    if (isLoginPage && user) {
+      return NextResponse.redirect(new URL('/admin', request.url));
+    }
+  } catch (err) {
+    console.error("Supabase Middleware Execution Error:", err);
   }
 
   return response;
