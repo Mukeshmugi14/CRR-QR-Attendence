@@ -47,33 +47,87 @@ export default async function EventLeaderboardPage({ params }: PageProps) {
   return (
     <div className="space-y-6">
       {/* Header breadcrumb */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-5">
+      <div className="flex items-start gap-3 sm:gap-4 border-b border-slate-800 pb-5">
         <Link
           href="/admin/events"
-          className="p-2 rounded-xl bg-slate-900 border border-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+          className="p-2 rounded-xl bg-slate-900 border border-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors shrink-0"
         >
           <ArrowLeft className="h-5 w-5" />
         </Link>
-        <div>
+        <div className="min-w-0">
           <span className="inline-flex px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 text-[10px] font-extrabold uppercase border border-indigo-500/20 mb-1">
             Leaderboard
           </span>
-          <h1 className="text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-100 break-words">
             {event.name}
           </h1>
-          <p className="text-sm text-slate-400 mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
             {new Date(event.event_date).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' })} • {startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </p>
         </div>
       </div>
 
+      {/* Standings — stacked cards on phones, table from md up */}
+      <div className="md:hidden space-y-3">
+        <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wide flex items-center gap-2">
+          <Trophy className="h-4 w-4 text-amber-400" />
+          Event Standings
+        </h3>
+
+        {leaderboard && leaderboard.length > 0 ? (
+          leaderboard.map((row: any) => (
+            <div key={row.member_id} className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+              <div className="flex items-start gap-3">
+                <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                  row.rank === 1 ? 'bg-amber-500/10 text-amber-400 border border-amber-500/25' :
+                  row.rank === 2 ? 'bg-slate-400/10 text-slate-300 border border-slate-400/25' :
+                  row.rank === 3 ? 'bg-yellow-700/10 text-yellow-600 border border-yellow-700/25' :
+                  'bg-slate-950 text-slate-500 border border-slate-850'
+                }`}>
+                  {row.rank}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-bold text-slate-100 break-words">{row.full_name}</p>
+                  <p className="text-[10px] font-mono font-semibold text-slate-500 mt-0.5">{row.member_code}</p>
+                  <p className="text-xs text-slate-400 font-medium mt-0.5 break-words">{row.position}</p>
+                </div>
+                <span className="text-lg font-black text-emerald-400 shrink-0">+{row.score}</span>
+              </div>
+
+              <div className="mt-3 pt-3 border-t border-slate-850 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] text-slate-400">
+                <span className={`inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                  row.attendance_method === 'id_card_scan'
+                    ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                    : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                }`}>
+                  {row.attendance_method === 'id_card_scan' ? 'ID Card' : 'Self'}
+                </span>
+                <span className="font-semibold text-slate-300">
+                  {new Date(row.scanned_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+                <span>
+                  {row.timing_category} · {row.minutes_from_start < 0
+                    ? `${Math.abs(row.minutes_from_start)} min early`
+                    : `${row.minutes_from_start} min late`}
+                </span>
+                <span className="text-slate-500">By: {row.scanned_by_name || 'Self Check-in'}</span>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-12 rounded-2xl bg-slate-900 border border-slate-800 text-slate-500 text-sm px-4">
+            No attendance check-ins recorded for this event yet.
+          </div>
+        )}
+      </div>
+
       {/* Leaderboard Table Card */}
-      <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800/80">
+      <div className="hidden md:block p-5 rounded-2xl bg-slate-900 border border-slate-800/80">
         <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wide mb-4 flex items-center gap-2">
           <Trophy className="h-4 w-4 text-amber-400" />
           Event Standings
         </h3>
-        
+
         {leaderboard && leaderboard.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm border-collapse">

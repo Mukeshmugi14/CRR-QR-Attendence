@@ -249,7 +249,7 @@ export function EventsList({ initialEvents }: EventsListProps) {
   return (
     <div className="space-y-6">
       {/* Title block */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">All Club Events</h3>
         <button
           onClick={() => {
@@ -257,7 +257,7 @@ export function EventsList({ initialEvents }: EventsListProps) {
             clearForm();
             setShowCreateModal(true);
           }}
-          className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 px-4 py-2.5 text-sm font-bold text-white transition-all active:scale-95 shadow-md shadow-indigo-600/10"
+          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 px-4 py-3 text-sm font-bold text-white transition-all active:scale-95 shadow-md shadow-indigo-600/10"
         >
           <Plus className="h-4 w-4" />
           Create Event
@@ -275,14 +275,14 @@ export function EventsList({ initialEvents }: EventsListProps) {
             return (
               <div 
                 key={evt.id} 
-                className={`p-6 rounded-2xl bg-slate-900 border transition-all ${
-                  evt.status === 'active' 
+                className={`p-4 sm:p-6 rounded-2xl bg-slate-900 border transition-all ${
+                  evt.status === 'active'
                     ? 'border-emerald-500/30 shadow-lg shadow-emerald-500/5 ring-1 ring-emerald-500/10'
                     : 'border-slate-800 hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-1">
+                <div className="flex items-start justify-between gap-3 sm:gap-4">
+                  <div className="space-y-1 min-w-0">
                     <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
                       evt.status === 'active' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
                       evt.status === 'completed' ? 'bg-slate-800 text-slate-400' :
@@ -291,11 +291,11 @@ export function EventsList({ initialEvents }: EventsListProps) {
                     }`}>
                       {evt.status === 'active' ? '🔴 Live Active' : evt.status}
                     </span>
-                    <h4 className="text-lg font-bold text-slate-100">{evt.name}</h4>
+                    <h4 className="text-base sm:text-lg font-bold text-slate-100 break-words">{evt.name}</h4>
                     <p className="text-xs text-slate-400 line-clamp-2">{evt.description || 'No description provided.'}</p>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 shrink-0">
                     <button
                       onClick={() => handleEditClick(evt)}
                       title="Edit Event"
@@ -334,24 +334,22 @@ export function EventsList({ initialEvents }: EventsListProps) {
                 </div>
 
                 {/* Event Actions Footer */}
-                <div className="mt-5 pt-4 border-t border-slate-850/60 flex items-center justify-between gap-4">
+                <div className="mt-5 pt-4 border-t border-slate-850/60 grid grid-cols-2 gap-2 sm:flex sm:items-center sm:justify-between sm:gap-4">
                   <button
                     onClick={() => setActiveQrEvent(evt)}
-                    className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white font-semibold transition-colors"
+                    className="inline-flex items-center justify-center sm:justify-start gap-1.5 rounded-lg bg-slate-950 sm:bg-transparent border border-slate-850 sm:border-0 px-3 py-2.5 sm:p-0 text-xs text-slate-400 hover:text-white font-semibold transition-colors"
                   >
-                    <QrCode className="h-4 w-4" />
-                    Display Fallback QR
+                    <QrCode className="h-4 w-4 shrink-0" />
+                    Fallback QR
                   </button>
 
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/admin/leaderboard/event/${evt.id}`}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-slate-950 border border-slate-850 hover:bg-slate-800 px-3 py-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-all"
-                    >
-                      <Trophy className="h-3.5 w-3.5" />
-                      Leaderboard
-                    </Link>
-                  </div>
+                  <Link
+                    href={`/admin/leaderboard/event/${evt.id}`}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-950 border border-slate-850 hover:bg-slate-800 px-3 py-2.5 sm:py-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-all"
+                  >
+                    <Trophy className="h-3.5 w-3.5 shrink-0" />
+                    Leaderboard
+                  </Link>
                 </div>
               </div>
             );
@@ -367,8 +365,11 @@ export function EventsList({ initialEvents }: EventsListProps) {
 
       {/* Create / Edit Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-950/80 backdrop-blur-sm sm:p-4">
+          <div
+            className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-t-2xl sm:rounded-2xl w-full max-w-xl max-h-[88dvh] overflow-y-auto overscroll-contain shadow-2xl relative"
+            style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 1rem)' }}
+          >
             <button
               onClick={() => setShowCreateModal(false)}
               className="absolute top-4 right-4 p-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-slate-200"
@@ -428,7 +429,7 @@ export function EventsList({ initialEvents }: EventsListProps) {
                     <select
                       value={startHour}
                       onChange={(e) => setStartHour(e.target.value)}
-                      className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     >
                       {hoursList.map(h => <option key={h} value={h}>{h}</option>)}
                     </select>
@@ -436,14 +437,14 @@ export function EventsList({ initialEvents }: EventsListProps) {
                     <select
                       value={startMin}
                       onChange={(e) => setStartMin(e.target.value)}
-                      className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     >
                       {minutesList.map(m => <option key={m} value={m}>{m}</option>)}
                     </select>
                     <select
                       value={startAmPm}
                       onChange={(e) => setStartAmPm(e.target.value)}
-                      className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     >
                       <option value="AM">AM</option>
                       <option value="PM">PM</option>
@@ -459,7 +460,7 @@ export function EventsList({ initialEvents }: EventsListProps) {
                     <select
                       value={endHour}
                       onChange={(e) => setEndHour(e.target.value)}
-                      className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     >
                       {hoursList.map(h => <option key={h} value={h}>{h}</option>)}
                     </select>
@@ -467,14 +468,14 @@ export function EventsList({ initialEvents }: EventsListProps) {
                     <select
                       value={endMin}
                       onChange={(e) => setEndMin(e.target.value)}
-                      className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     >
                       {minutesList.map(m => <option key={m} value={m}>{m}</option>)}
                     </select>
                     <select
                       value={endAmPm}
                       onChange={(e) => setEndAmPm(e.target.value)}
-                      className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     >
                       <option value="AM">AM</option>
                       <option value="PM">PM</option>
@@ -499,7 +500,7 @@ export function EventsList({ initialEvents }: EventsListProps) {
                       <select
                         value={cutoffHour}
                         onChange={(e) => setCutoffHour(e.target.value)}
-                        className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       >
                         {hoursList.map(h => <option key={h} value={h}>{h}</option>)}
                       </select>
@@ -507,14 +508,14 @@ export function EventsList({ initialEvents }: EventsListProps) {
                       <select
                         value={cutoffMin}
                         onChange={(e) => setCutoffMin(e.target.value)}
-                        className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       >
                         {minutesList.map(m => <option key={m} value={m}>{m}</option>)}
                       </select>
                       <select
                         value={cutoffAmPm}
                         onChange={(e) => setCutoffAmPm(e.target.value)}
-                        className="block w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        className="block w-full px-2 sm:px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       >
                         <option value="AM">AM</option>
                         <option value="PM">PM</option>

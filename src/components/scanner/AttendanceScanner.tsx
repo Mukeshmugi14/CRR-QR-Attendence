@@ -242,7 +242,7 @@ export function AttendanceScanner({ initialActiveEvents }: AttendanceScannerProp
   // Render Screens
   if (activeEvents.length === 0) {
     return (
-      <div className="p-8 rounded-2xl bg-slate-900 border border-slate-800 text-center max-w-xl mx-auto space-y-4">
+      <div className="p-6 sm:p-8 rounded-2xl bg-slate-900 border border-slate-800 text-center max-w-xl mx-auto space-y-4">
         <CameraOff className="h-12 w-12 mx-auto text-slate-600 animate-pulse" />
         <h2 className="text-xl font-bold text-slate-100">NO ACTIVE EVENT</h2>
         <p className="text-sm text-slate-400 leading-normal">
@@ -262,7 +262,7 @@ export function AttendanceScanner({ initialActiveEvents }: AttendanceScannerProp
 
   if (activeEvents.length > 1 && !selectedEvent) {
     return (
-      <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 max-w-xl mx-auto">
+      <div className="p-4 sm:p-6 rounded-2xl bg-slate-900 border border-slate-800 max-w-xl mx-auto">
         <h2 className="text-lg font-bold text-slate-200 uppercase tracking-wide text-center">MULTIPLE ACTIVE EVENTS</h2>
         <p className="text-xs text-slate-400 text-center mt-1">Please select the event you want to scan attendance for:</p>
         <div className="mt-5 space-y-3">
@@ -291,20 +291,20 @@ export function AttendanceScanner({ initialActiveEvents }: AttendanceScannerProp
       {/* Left 2 Cols: Camera scanner view */}
       <div className="lg:col-span-2 space-y-4">
         {selectedEvent && (
-          <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <span className="inline-flex px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-1">
+          <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="min-w-0">
+              <span className="inline-flex px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-1 max-w-full break-words text-left">
                 🔴 Scan Target: {selectedEvent.name}
               </span>
-              <div className="flex items-center gap-4 text-xs text-slate-400 mt-0.5">
-                <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {formatTime(selectedEvent.start_time)} - {formatTime(selectedEvent.end_time)}</span>
-                <span>•</span>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400 mt-0.5">
+                <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5 shrink-0" /> {formatTime(selectedEvent.start_time)} - {formatTime(selectedEvent.end_time)}</span>
+                <span className="hidden sm:inline">•</span>
                 <span>Date: {formatDate(selectedEvent.event_date, false)}</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 bg-slate-950/60 px-3.5 py-1.5 rounded-xl border border-slate-850 shrink-0">
-              <Users className="h-4 w-4 text-indigo-400" />
+            <div className="flex items-center justify-center gap-3 bg-slate-950/60 px-3.5 py-2 rounded-xl border border-slate-850 shrink-0">
+              <Users className="h-4 w-4 text-indigo-400 shrink-0" />
               <span className="text-sm font-bold">{selectedEvent.present_count} / {selectedEvent.total_members} Present</span>
             </div>
           </div>

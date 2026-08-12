@@ -172,16 +172,16 @@ export default function ExcelImportPage() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-slate-800 pb-5">
+      <div className="flex items-start gap-3 sm:gap-4 border-b border-slate-800 pb-5">
         <Link
           href="/admin/members"
-          className="p-2 rounded-xl bg-slate-900 border border-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+          className="p-2 rounded-xl bg-slate-900 border border-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors shrink-0"
         >
           <ArrowLeft className="h-5 w-5" />
         </Link>
-        <div>
-          <h1 className="text-2xl font-extrabold text-slate-100 flex items-center gap-2">
-            <FileSpreadsheet className="h-6 w-6 text-indigo-400" />
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+            <FileSpreadsheet className="h-6 w-6 text-indigo-400 shrink-0" />
             Import Members from Excel
           </h1>
           <p className="text-sm text-slate-400 mt-1">
@@ -214,7 +214,7 @@ export default function ExcelImportPage() {
       {!importResult && (
         <div 
           onClick={triggerSelectFile}
-          className="p-10 rounded-2xl border-2 border-dashed border-slate-800 hover:border-indigo-500/40 bg-slate-900/35 hover:bg-slate-900/50 transition-all text-center cursor-pointer group flex flex-col items-center justify-center gap-4"
+          className="p-6 sm:p-10 rounded-2xl border-2 border-dashed border-slate-800 hover:border-indigo-500/40 bg-slate-900/35 hover:bg-slate-900/50 transition-all text-center cursor-pointer group flex flex-col items-center justify-center gap-4"
         >
           <input
             type="file"
@@ -247,20 +247,20 @@ export default function ExcelImportPage() {
       {parsedData.length > 0 && !importResult && (
         <div className="space-y-6">
           {/* Analysis Card */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="block text-xs font-bold text-slate-400 uppercase">Total Rows Read</span>
-              <span className="block text-2xl font-black text-slate-200 mt-1">{totalRows}</span>
-            </div>
-            
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="block text-xs font-bold text-emerald-400 uppercase">Valid Records</span>
-              <span className="block text-2xl font-black text-emerald-400 mt-1">{validRecords.length}</span>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
+            <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800">
+              <span className="block text-[10px] sm:text-xs font-bold text-slate-400 uppercase leading-tight">Total Rows Read</span>
+              <span className="block text-xl sm:text-2xl font-black text-slate-200 mt-1">{totalRows}</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="block text-xs font-bold text-amber-400 uppercase font-semibold">Missing Name/Position</span>
-              <span className="block text-2xl font-black text-amber-400 mt-1">{invalidRows.length}</span>
+            <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800">
+              <span className="block text-[10px] sm:text-xs font-bold text-emerald-400 uppercase leading-tight">Valid Records</span>
+              <span className="block text-xl sm:text-2xl font-black text-emerald-400 mt-1">{validRecords.length}</span>
+            </div>
+
+            <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800">
+              <span className="block text-[10px] sm:text-xs font-bold text-amber-400 uppercase leading-tight">Missing Name/Position</span>
+              <span className="block text-xl sm:text-2xl font-black text-amber-400 mt-1">{invalidRows.length}</span>
             </div>
           </div>
 
@@ -281,7 +281,7 @@ export default function ExcelImportPage() {
           )}
 
           {/* Action Button */}
-          <div className="flex items-center justify-end gap-3 border-t border-slate-800 pt-5">
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 border-t border-slate-800 pt-5">
             <button
               onClick={() => {
                 setParsedData([]);
@@ -289,14 +289,14 @@ export default function ExcelImportPage() {
                 setValidRecords([]);
                 setInvalidRows([]);
               }}
-              className="px-4 py-2 bg-slate-900 border border-slate-800 hover:bg-slate-800 rounded-xl text-sm font-semibold text-slate-400 hover:text-white transition-all"
+              className="px-4 py-3 sm:py-2 bg-slate-900 border border-slate-800 hover:bg-slate-800 rounded-xl text-sm font-semibold text-slate-400 hover:text-white transition-all"
             >
               Clear Upload
             </button>
             <button
               onClick={handleImportSubmit}
               disabled={importing || validRecords.length === 0}
-              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 text-sm font-bold text-white transition-all active:scale-95 disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 px-6 py-3 sm:py-2.5 text-sm font-bold text-white transition-all active:scale-95 disabled:opacity-50"
             >
               {importing ? (
                 <>
@@ -316,7 +316,26 @@ export default function ExcelImportPage() {
               Import Preview (First Sheet)
             </h3>
             
-            <div className="overflow-x-auto max-h-[350px]">
+            {/* Phones: one stacked card per parsed row */}
+            <div className="md:hidden max-h-[350px] overflow-y-auto overscroll-contain space-y-2.5 pr-1">
+              {validRecords.map((m, idx) => (
+                <div key={idx} className="p-3 rounded-xl bg-slate-950/40 border border-slate-850 space-y-1.5">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-sm font-bold text-slate-200 break-words min-w-0">{m.full_name}</p>
+                    <span className="font-mono text-[10px] font-semibold text-slate-500 bg-slate-950 border border-slate-850 rounded px-1.5 py-0.5 shrink-0">
+                      {m.member_code || 'Auto'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-indigo-400 break-words">{m.position}</p>
+                  <div className="text-[11px] text-slate-500 space-y-0.5">
+                    <p className="break-all">Email: {m.email || '—'}</p>
+                    <p>Phone: {m.phone || '—'}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden md:block overflow-x-auto max-h-[350px]">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-500 font-bold uppercase tracking-wider sticky top-0 bg-slate-900 z-10">

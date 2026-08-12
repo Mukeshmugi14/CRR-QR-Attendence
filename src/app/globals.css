@@ -12,6 +12,25 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Intermediate palette steps the UI already references (slate-850, red-350, ...).
+   Tailwind ships only the round hundreds, so without these the classes compile
+   to nothing and the borders/text they style silently disappear. */
+@theme {
+  --color-slate-250: #d7dfe8;
+  --color-slate-350: #b0bccc;
+  --color-slate-450: #7c8ca2;
+  --color-slate-650: #3d4a5f;
+  --color-slate-850: #172033;
+  --color-slate-855: #151e30;
+  --color-red-250: #fdb8b8;
+  --color-red-350: #fa8b8b;
+}
+
+/* Clears the iOS home indicator / Android gesture bar under fixed bottom chrome. */
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,10 +38,27 @@
   }
 }
 
+html {
+  /* Keep iOS from re-flowing type in landscape. */
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  /* Decorative blurred glows are wider than the phone; never let them scroll the page sideways. */
+  overflow-x: hidden;
+}
+
+/* iOS zooms the viewport when a focused control has a font smaller than 16px.
+   Bump the controls themselves rather than the whole type scale. */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }
 
 /* Style HTML5 QR Code scanner container and video stream */

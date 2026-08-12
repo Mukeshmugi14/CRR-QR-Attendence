@@ -67,7 +67,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-zinc-900 px-4 py-12 sm:px-6 lg:px-8 text-white font-sans">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-60 pointer-events-none" />
 
-      <div className="w-full max-w-md space-y-6 bg-slate-900/60 border border-slate-850 p-8 rounded-2xl backdrop-blur-md shadow-2xl relative z-10">
+      <div className="w-full max-w-md space-y-6 bg-slate-900/60 border border-slate-850 p-6 sm:p-8 rounded-2xl backdrop-blur-md shadow-2xl relative z-10">
         <div className="flex flex-col items-center">
           <img src="/logo.png" className="h-24 w-24 rounded-full object-cover border-2 border-slate-800 shadow-lg shadow-indigo-950/30 mb-2" alt="CRR Logo" />
           <h2 className="text-center text-2xl font-black tracking-tight text-white uppercase">

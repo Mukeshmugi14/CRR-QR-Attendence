@@ -344,24 +344,24 @@ export function IdCardGenerator({ members, stats, initialSelectedId }: IdCardGen
   return (
     <div className="space-y-6">
       {/* Mini Stats Summary */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-          <span className="text-xs text-slate-400 font-bold uppercase">Total Active Members</span>
-          <span className="block text-2xl font-black text-slate-200 mt-1">{stats.total}</span>
+      <div className="grid grid-cols-3 gap-2 sm:gap-4">
+        <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800">
+          <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase leading-tight block">Total Active Members</span>
+          <span className="block text-xl sm:text-2xl font-black text-slate-200 mt-1">{stats.total}</span>
         </div>
-        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-          <span className="text-xs text-emerald-400 font-bold uppercase">QR Codes Active</span>
-          <span className="block text-2xl font-black text-emerald-400 mt-1">{stats.qrGenerated}</span>
+        <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800">
+          <span className="text-[10px] sm:text-xs text-emerald-400 font-bold uppercase leading-tight block">QR Codes Active</span>
+          <span className="block text-xl sm:text-2xl font-black text-emerald-400 mt-1">{stats.qrGenerated}</span>
         </div>
-        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-          <span className="text-xs text-red-400 font-bold uppercase">QR Codes Revoked</span>
-          <span className="block text-2xl font-black text-red-400 mt-1">{stats.qrRevoked}</span>
+        <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800">
+          <span className="text-[10px] sm:text-xs text-red-400 font-bold uppercase leading-tight block">QR Codes Revoked</span>
+          <span className="block text-xl sm:text-2xl font-black text-red-400 mt-1">{stats.qrRevoked}</span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Col: Selector */}
-        <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col h-[520px]">
+        <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col h-[300px] lg:h-[520px]">
           <h3 className="text-sm font-bold text-slate-200 mb-3 uppercase tracking-wide">Select Member</h3>
           <div className="flex-1 overflow-y-auto space-y-2 pr-1">
             {members.map((m) => (
@@ -387,7 +387,7 @@ export function IdCardGenerator({ members, stats, initialSelectedId }: IdCardGen
         </div>
 
         {/* Center Col: Visual Card Preview */}
-        <div className="lg:col-span-2 flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-900 border border-slate-800 relative">
+        <div className="lg:col-span-2 flex flex-col items-center justify-center p-4 sm:p-6 rounded-2xl bg-slate-900 border border-slate-800 relative">
           {selectedMember ? (
             <div className="w-full max-w-sm flex flex-col items-center gap-6">
               {/* Card Controls */}

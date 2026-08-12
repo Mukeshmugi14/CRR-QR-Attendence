@@ -38,13 +38,13 @@ export function MonthPicker() {
   };
 
   return (
-    <div className="flex items-center gap-3 bg-slate-900 p-3 rounded-xl border border-slate-800 shrink-0">
-      <Calendar className="h-4.5 w-4.5 text-indigo-400" />
-      
+    <div className="flex items-center gap-2 sm:gap-3 bg-slate-900 p-3 rounded-xl border border-slate-800 w-full sm:w-auto sm:shrink-0">
+      <Calendar className="h-4.5 w-4.5 text-indigo-400 shrink-0" />
+
       <select
         value={currentMonth}
         onChange={(e) => handleMonthChange(Number(e.target.value))}
-        className="bg-transparent text-sm font-semibold text-slate-200 focus:outline-none cursor-pointer"
+        className="flex-1 sm:flex-none min-w-0 bg-transparent text-sm font-semibold text-slate-200 focus:outline-none cursor-pointer"
       >
         {months.map((m) => (
           <option key={m.value} value={m.value} className="bg-slate-900 text-slate-200">
@@ -56,7 +56,7 @@ export function MonthPicker() {
       <select
         value={currentYear}
         onChange={(e) => handleYearChange(Number(e.target.value))}
-        className="bg-transparent text-sm font-semibold text-slate-200 focus:outline-none cursor-pointer"
+        className="shrink-0 bg-transparent text-sm font-semibold text-slate-200 focus:outline-none cursor-pointer"
       >
         {years.map((y) => (
           <option key={y} value={y} className="bg-slate-900 text-slate-200">

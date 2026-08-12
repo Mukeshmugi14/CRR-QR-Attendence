@@ -66,7 +66,7 @@ export function SelfCheckInForm({ event, token }: SelfCheckInFormProps) {
 
   if (checkInData) {
     return (
-      <div className="w-full max-w-md bg-slate-900 border border-emerald-500/20 p-8 rounded-2xl text-center space-y-6 shadow-2xl relative">
+      <div className="w-full max-w-md bg-slate-900 border border-emerald-500/20 p-6 sm:p-8 rounded-2xl text-center space-y-6 shadow-2xl relative">
         <div className="absolute inset-0 bg-emerald-500/[0.01] rounded-2xl pointer-events-none" />
         
         <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/30 inline-block scale-up">
@@ -106,7 +106,7 @@ export function SelfCheckInForm({ event, token }: SelfCheckInFormProps) {
   }
 
   return (
-    <div className="w-full max-w-md bg-slate-900/60 border border-slate-850 p-8 rounded-2xl backdrop-blur-md shadow-2xl relative">
+    <div className="w-full max-w-md bg-slate-900/60 border border-slate-850 p-6 sm:p-8 rounded-2xl backdrop-blur-md shadow-2xl relative">
       <div className="flex flex-col items-center mb-6">
         <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl text-white shadow-lg mb-4">
           <QrCode className="h-6 w-6" />

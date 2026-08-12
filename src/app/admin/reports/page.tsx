@@ -11,8 +11,8 @@ export default async function ReportsPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-100 flex items-center gap-2.5">
-            <BarChart3 className="h-6 w-6 text-indigo-400" />
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-100 flex items-center gap-2.5">
+            <BarChart3 className="h-6 w-6 text-indigo-400 shrink-0" />
             Executive Reports & Exports
           </h1>
           <p className="text-sm text-slate-400 mt-1">

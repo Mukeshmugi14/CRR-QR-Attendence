@@ -61,7 +61,7 @@ export function SergeantManager({ initialSergeants }: SergeantManagerProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Creation form */}
-      <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-6">
+      <div className="p-4 sm:p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-6">
         <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wide flex items-center gap-2">
           <UserPlus className="h-4.5 w-4.5 text-indigo-400" /> Add Sergeant Account
         </h3>
@@ -131,7 +131,7 @@ export function SergeantManager({ initialSergeants }: SergeantManagerProps) {
       </div>
 
       {/* Sergeants List */}
-      <div className="lg:col-span-2 p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+      <div className="lg:col-span-2 p-4 sm:p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
         <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wide flex items-center gap-2">
           <Users className="h-4.5 w-4.5 text-indigo-400" /> Active Sergeant Accounts
         </h3>
@@ -141,20 +141,20 @@ export function SergeantManager({ initialSergeants }: SergeantManagerProps) {
             {sergeants.map((sg) => (
               <div 
                 key={sg.id} 
-                className="flex items-center justify-between p-4 rounded-xl bg-slate-950/40 border border-slate-850 hover:border-slate-800 transition-colors"
+                className="flex items-center justify-between gap-3 p-4 rounded-xl bg-slate-950/40 border border-slate-850 hover:border-slate-800 transition-colors"
               >
-                <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 flex items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="h-9 w-9 shrink-0 flex items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-200">{sg.email}</h4>
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-bold text-slate-200 break-all">{sg.email}</h4>
                     <p className="text-[10px] text-slate-500 mt-0.5">
                       Created on: {formatDate(sg.createdAt)}
                     </p>
                   </div>
                 </div>
-                <div>
+                <div className="shrink-0">
                   <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                     sergeant
                   </span>

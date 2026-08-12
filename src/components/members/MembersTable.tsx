@@ -164,8 +164,8 @@ export function MembersTable({ initialMembers }: MembersTableProps) {
       {/* Top action bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-3 flex-1">
-          <div className="relative min-w-[240px] flex-1">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 flex-1">
+          <div className="relative w-full sm:min-w-[240px] sm:flex-1">
             <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
               <Search className="h-4 w-4" />
             </span>
@@ -174,39 +174,41 @@ export function MembersTable({ initialMembers }: MembersTableProps) {
               placeholder="Search by name or member code..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="block w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="block w-full pl-9 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
 
-          <select
-            value={positionFilter}
-            onChange={(e) => setPositionFilter(e.target.value)}
-            className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-          >
-            <option value="All">All Positions</option>
-            {uniquePositions.map(pos => (
-              <option key={pos} value={pos}>{pos}</option>
-            ))}
-          </select>
+          <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center">
+            <select
+              value={positionFilter}
+              onChange={(e) => setPositionFilter(e.target.value)}
+              className="w-full px-3 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            >
+              <option value="All">All Positions</option>
+              {uniquePositions.map(pos => (
+                <option key={pos} value={pos}>{pos}</option>
+              ))}
+            </select>
 
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-          >
-            <option value="All">All Statuses</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-            <option value="QR Active">QR Active</option>
-            <option value="QR Revoked">QR Revoked</option>
-          </select>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full px-3 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            >
+              <option value="All">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+              <option value="QR Active">QR Active</option>
+              <option value="QR Revoked">QR Revoked</option>
+            </select>
+          </div>
         </div>
 
         {/* Buttons */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center shrink-0">
           <Link
             href="/admin/members/import"
-            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 border border-slate-800 px-4 py-2 text-sm font-semibold hover:bg-slate-800 text-slate-300 hover:text-white transition-all active:scale-95"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 border border-slate-800 px-4 py-2.5 text-sm font-semibold hover:bg-slate-800 text-slate-300 hover:text-white transition-all active:scale-95"
           >
             Import Excel
           </Link>
@@ -216,7 +218,7 @@ export function MembersTable({ initialMembers }: MembersTableProps) {
               setEditingMember(null);
               clearForm();
             }}
-            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 px-4 py-2 text-sm font-bold text-white transition-all active:scale-95 shadow-md shadow-indigo-600/10"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 px-4 py-2.5 text-sm font-bold text-white transition-all active:scale-95 shadow-md shadow-indigo-600/10"
           >
             <UserPlus className="h-4 w-4" />
             Add Member
@@ -226,7 +228,7 @@ export function MembersTable({ initialMembers }: MembersTableProps) {
 
       {/* Editor Modal Drawer */}
       {(isAdding || editingMember) && (
-        <div className="p-6 rounded-2xl bg-slate-900 border border-indigo-500/20 max-w-xl">
+        <div className="p-4 sm:p-6 rounded-2xl bg-slate-900 border border-indigo-500/20 max-w-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-slate-200">
               {editingMember ? `Edit Member: ${editingMember.member_code}` : 'Add New Member'}
@@ -324,8 +326,101 @@ export function MembersTable({ initialMembers }: MembersTableProps) {
         </div>
       )}
 
-      {/* Members table */}
-      <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800/80 overflow-hidden">
+      {/* Members list — stacked cards on phones, full table from md up */}
+      <div className="md:hidden space-y-3">
+        {filteredMembers.map((member) => (
+          <div key={member.id} className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <h4 className="text-sm font-bold text-slate-100 break-words">{member.full_name}</h4>
+                <p className="text-xs font-medium text-indigo-300 mt-0.5 break-words">{member.position}</p>
+              </div>
+              <span className="font-mono text-[10px] font-bold text-slate-300 bg-slate-950 border border-slate-850 rounded px-1.5 py-1 shrink-0">
+                {member.member_code}
+              </span>
+            </div>
+
+            {(member.email || member.phone) && (
+              <div className="text-xs text-slate-400 space-y-1">
+                {member.email && (
+                  <div className="flex items-center gap-1.5 break-all">
+                    <Mail className="h-3 w-3 shrink-0" /> {member.email}
+                  </div>
+                )}
+                {member.phone && (
+                  <div className="flex items-center gap-1.5">
+                    <Phone className="h-3 w-3 shrink-0" /> {member.phone}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-extrabold uppercase tracking-wide ${
+                member.qr_status === 'active'
+                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                  : 'bg-red-500/10 text-red-400 border border-red-500/20'
+              }`}>
+                QR {member.qr_status}
+              </span>
+              <button
+                onClick={() => handleToggleActive(member.id, member.is_active)}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold transition-all active:scale-95 ${
+                  member.is_active
+                    ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
+                    : 'bg-slate-800 text-slate-500 border border-slate-700'
+                }`}
+              >
+                <Activity className="h-3 w-3 shrink-0" />
+                {member.is_active ? 'Active' : 'Inactive'}
+              </button>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-850">
+              <button
+                onClick={() => startEdit(member)}
+                className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-slate-950 border border-slate-850 text-xs font-semibold text-slate-300 active:bg-slate-800"
+              >
+                <Edit2 className="h-3.5 w-3.5" />
+                Edit
+              </button>
+
+              {member.qr_status === 'active' ? (
+                <button
+                  onClick={() => handleRevokeQr(member.id)}
+                  className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-red-500/5 border border-red-500/20 text-xs font-semibold text-red-400 active:bg-red-500/15"
+                >
+                  <ShieldAlert className="h-3.5 w-3.5" />
+                  Revoke
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleReissueQr(member.id)}
+                  className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20 text-xs font-semibold text-emerald-400 active:bg-emerald-500/15"
+                >
+                  <RefreshCw className="h-3.5 w-3.5" />
+                  Reissue
+                </button>
+              )}
+
+              <Link
+                href={`/admin/id-cards?member=${member.id}`}
+                className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-slate-950 border border-slate-850 text-xs font-semibold text-indigo-400 active:bg-slate-800"
+              >
+                <CreditCard className="h-3.5 w-3.5" />
+                Card
+              </Link>
+            </div>
+          </div>
+        ))}
+        {filteredMembers.length === 0 && (
+          <div className="text-center py-12 rounded-2xl bg-slate-900 border border-slate-800 text-slate-500 text-sm">
+            No members match search and filter criteria.
+          </div>
+        )}
+      </div>
+
+      <div className="hidden md:block p-4 rounded-2xl bg-slate-900 border border-slate-800/80 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm border-collapse">
             <thead>

@@ -32,7 +32,7 @@ export default async function MemberQrResolverPage({ params }: PageProps) {
 
       {isAuthorized && isValidToken ? (
         /* Admin context: show member details */
-        <div className="w-full max-w-md bg-slate-900 border border-indigo-500/20 p-8 rounded-2xl shadow-2xl relative">
+        <div className="w-full max-w-md bg-slate-900 border border-indigo-500/20 p-6 sm:p-8 rounded-2xl shadow-2xl relative">
           <div className="flex flex-col items-center text-center">
             <div className="p-3 bg-indigo-500/10 text-indigo-400 rounded-full border border-indigo-500/30 mb-4">
               <ShieldCheck className="h-8 w-8" />
@@ -45,19 +45,19 @@ export default async function MemberQrResolverPage({ params }: PageProps) {
           </div>
 
           <div className="mt-6 border-t border-slate-850 pt-5 space-y-4">
-            <div className="flex justify-between items-center text-xs">
-              <span className="text-slate-500 font-semibold uppercase">Full Name</span>
-              <span className="font-bold text-slate-200">{member.full_name}</span>
+            <div className="flex justify-between items-start gap-3 text-xs">
+              <span className="text-slate-500 font-semibold uppercase shrink-0">Full Name</span>
+              <span className="font-bold text-slate-200 text-right break-words">{member.full_name}</span>
             </div>
-            <div className="flex justify-between items-center text-xs">
-              <span className="text-slate-500 font-semibold uppercase">Position</span>
-              <span className="font-bold text-indigo-400">{member.position}</span>
+            <div className="flex justify-between items-start gap-3 text-xs">
+              <span className="text-slate-500 font-semibold uppercase shrink-0">Position</span>
+              <span className="font-bold text-indigo-400 text-right break-words">{member.position}</span>
             </div>
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex justify-between items-start gap-3 text-xs">
               <span className="text-slate-500 font-semibold uppercase">Member Code</span>
               <span className="font-mono font-bold text-slate-350">{member.member_code}</span>
             </div>
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex justify-between items-start gap-3 text-xs">
               <span className="text-slate-500 font-semibold uppercase">QR Code Status</span>
               <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-extrabold uppercase ${
                 member.qr_status === 'active' ? 'bg-emerald-500/15 text-emerald-400' : 'bg-red-500/15 text-red-400'
@@ -66,7 +66,7 @@ export default async function MemberQrResolverPage({ params }: PageProps) {
                 {member.qr_status}
               </span>
             </div>
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex justify-between items-start gap-3 text-xs">
               <span className="text-slate-500 font-semibold uppercase">Roster Status</span>
               <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-extrabold uppercase ${
                 member.is_active ? 'bg-indigo-500/15 text-indigo-400' : 'bg-slate-800 text-slate-500'
@@ -88,7 +88,7 @@ export default async function MemberQrResolverPage({ params }: PageProps) {
         </div>
       ) : (
         /* Public view or invalid token: show generic lock message */
-        <div className="w-full max-w-md bg-slate-900/60 border border-slate-850 p-8 rounded-2xl backdrop-blur-md shadow-2xl text-center space-y-6">
+        <div className="w-full max-w-md bg-slate-900/60 border border-slate-850 p-6 sm:p-8 rounded-2xl backdrop-blur-md shadow-2xl text-center space-y-6">
           <div className="p-3 bg-slate-950 border border-slate-800 text-slate-500 rounded-full inline-block">
             <ShieldAlert className="h-8 w-8 text-slate-400" />
           </div>

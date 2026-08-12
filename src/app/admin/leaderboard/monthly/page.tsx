@@ -44,8 +44,8 @@ export default async function MonthlyLeaderboardPage({ searchParams }: PageProps
       {/* Title / Action bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-100 flex items-center gap-2.5">
-            <Trophy className="h-6 w-6 text-indigo-400" />
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-100 flex items-center gap-2.5">
+            <Trophy className="h-6 w-6 text-indigo-400 shrink-0" />
             Monthly Standings
           </h1>
           <p className="text-sm text-slate-400 mt-1">
@@ -97,8 +97,65 @@ export default async function MonthlyLeaderboardPage({ searchParams }: PageProps
         </div>
       )}
 
+      {/* Leaderboard — stacked cards on phones, table from md up */}
+      <div className="md:hidden space-y-3">
+        {leaderboard && leaderboard.length > 0 ? (
+          leaderboard.map((row: any) => (
+            <div key={row.member_id} className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+              <div className="flex items-start gap-3">
+                <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                  row.rank === 1 ? 'bg-amber-500/10 text-amber-400 border border-amber-500/25' :
+                  row.rank === 2 ? 'bg-slate-400/10 text-slate-300 border border-slate-400/25' :
+                  row.rank === 3 ? 'bg-yellow-700/10 text-yellow-600 border border-yellow-700/25' :
+                  'bg-slate-950 text-slate-500 border border-slate-850'
+                }`}>
+                  {row.rank}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-bold text-slate-100 break-words">{row.full_name}</p>
+                  <p className="text-[10px] font-mono font-semibold text-slate-500 mt-0.5">{row.member_code}</p>
+                  <p className="text-xs text-slate-400 font-medium mt-0.5 break-words">{row.position}</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-lg font-black text-indigo-400 leading-none">{Number(row.total_points)}</p>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-1">POINTS</p>
+                </div>
+              </div>
+
+              <div className="mt-3 pt-3 border-t border-slate-850 grid grid-cols-3 gap-2 text-center">
+                <div>
+                  <div className="flex items-center justify-center gap-1 text-slate-200 text-sm font-bold">
+                    <UserCheck className="h-3.5 w-3.5 text-indigo-400" />
+                    {Number(row.events_attended)}
+                  </div>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Events</p>
+                </div>
+                <div>
+                  <div className="flex items-center justify-center gap-1 text-slate-200 text-sm font-bold">
+                    <Award className="h-3.5 w-3.5 text-indigo-400" />
+                    {Number(row.average_score)}
+                  </div>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Avg Score</p>
+                </div>
+                <div>
+                  <div className="flex items-center justify-center gap-1 text-slate-200 text-sm font-bold">
+                    <Percent className="h-3.5 w-3.5 text-indigo-400" />
+                    {Number(row.attendance_percentage)}%
+                  </div>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Attendance</p>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-12 rounded-2xl bg-slate-900 border border-slate-800 text-slate-500 text-sm px-4">
+            No events held or member scores recorded for {monthName} {year}.
+          </div>
+        )}
+      </div>
+
       {/* Leaderboard Table Card */}
-      <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800/80">
+      <div className="hidden md:block p-5 rounded-2xl bg-slate-900 border border-slate-800/80">
         {leaderboard && leaderboard.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm border-collapse">

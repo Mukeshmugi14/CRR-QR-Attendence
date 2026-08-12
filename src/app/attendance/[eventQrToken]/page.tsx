@@ -22,7 +22,7 @@ export default async function PublicAttendancePage({ params }: PageProps) {
       {result.success && result.event ? (
         <SelfCheckInForm event={result.event} token={token} />
       ) : (
-        <div className="w-full max-w-md bg-slate-900/60 border border-slate-850 p-8 rounded-2xl backdrop-blur-md shadow-2xl text-center space-y-6 relative">
+        <div className="w-full max-w-md bg-slate-900/60 border border-slate-850 p-6 sm:p-8 rounded-2xl backdrop-blur-md shadow-2xl text-center space-y-6 relative">
           <div className="p-3 bg-red-500/10 text-red-400 rounded-full border border-red-500/30 inline-block">
             <AlertCircle className="h-8 w-8" />
           </div>

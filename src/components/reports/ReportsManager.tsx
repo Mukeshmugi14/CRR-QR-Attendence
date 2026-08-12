@@ -298,7 +298,7 @@ export function ReportsManager() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Settings Panel */}
-      <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-6">
+      <div className="p-4 sm:p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-6">
         <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wide">Report Parameters</h3>
         
         {error && (
@@ -381,7 +381,7 @@ export function ReportsManager() {
       </div>
 
       {/* Guide / Preview Box */}
-      <div className="lg:col-span-2 p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
+      <div className="lg:col-span-2 p-4 sm:p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
         <div className="space-y-4">
           <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wide flex items-center gap-2">
             <FileText className="h-5 w-5 text-indigo-400" /> Document Preview Guidelines
