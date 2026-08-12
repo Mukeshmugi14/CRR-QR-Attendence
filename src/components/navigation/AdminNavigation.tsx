@@ -114,32 +114,36 @@ export function AdminNavigation({ admin, children }: AdminNavigationProps) {
         />
       )}
 
-      {/* Mobile Drawer (lg hidden) */}
-      <aside 
-        className={`fixed inset-y-0 left-0 w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 z-50 transform transition-transform duration-300 lg:hidden ${
-          mobileMenuOpen ? 'translate-x-0' : '-translate-x-0 -left-64'
+      {/* Mobile Bottom Sheet Menu (lg hidden) */}
+      <div 
+        className={`fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 rounded-t-3xl flex flex-col z-50 transform transition-transform duration-300 ease-out lg:hidden shadow-2xl ${
+          mobileMenuOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}
       >
-        {/* Brand with Close Icon */}
-        <div className="h-16 px-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
+        {/* Pull Handle Indicator */}
+        <div className="w-12 h-1 bg-slate-700 rounded-full mx-auto my-3 shrink-0" />
+
+        {/* Header with Title and Close Button */}
+        <div className="px-6 pb-4 flex items-center justify-between border-b border-slate-855">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" className="h-8 w-8 rounded-full object-cover border border-slate-800" alt="CRR Logo" />
+            <img src="/logo.png" className="h-7 w-7 rounded-full object-cover border border-slate-800" alt="CRR Logo" />
             <span className="font-extrabold text-xs tracking-widest uppercase text-slate-100 font-sans">
-              CRR-Attendence
+              CRR-Attendence Menu
             </span>
           </div>
           <button 
             onClick={() => setMobileMenuOpen(false)}
-            className="p-1.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-450 hover:text-white"
+            className="p-1.5 rounded-lg bg-slate-950 border border-slate-850 text-slate-400 hover:text-white"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
         {/* User Card */}
-        <div className="p-4 border-b border-slate-800 bg-slate-950/20">
-          <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-950/55 border border-slate-800">
-            <img src="/logo.png" className="h-10 w-10 rounded-full object-cover border border-slate-800 shrink-0" alt="Logo" />
+        <div className="p-4 border-b border-slate-855 bg-slate-950/20">
+          <div className="flex items-center gap-3 p-2.5 rounded-xl bg-slate-950/55 border border-slate-850">
+            <img src="/logo.png" className="h-9 w-9 rounded-full object-cover border border-slate-800 shrink-0" alt="Logo" />
             <div className="overflow-hidden">
               <p className="text-xs text-slate-400 font-medium">Logged in as</p>
               <p className="text-sm font-bold text-slate-200 truncate">{admin.email}</p>
@@ -150,38 +154,65 @@ export function AdminNavigation({ admin, children }: AdminNavigationProps) {
           </div>
         </div>
 
-        {/* Nav Links */}
-        <nav className="flex-1 px-4 py-4 space-y-1.5 overflow-y-auto">
-          {navigation.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all ${
-                  item.highlight
-                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/15 hover:from-indigo-500 hover:to-purple-500'
-                    : isActive
-                      ? 'bg-slate-800 text-white border border-slate-700'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-                }`}
-              >
-                <Icon className={`mr-3 h-5 w-5 shrink-0 ${
-                  item.highlight ? 'text-white' : isActive ? 'text-indigo-400' : 'text-slate-400 group-hover:text-white transition-colors'
-                }`} />
-                {item.name}
-              </Link>
-            );
-          })}
-        </nav>
+        {/* Remaining Nav Links & Actions in Bottom Sheet */}
+        <div className="px-4 py-4 space-y-1.5 max-h-[40vh] overflow-y-auto">
+          {/* Members */}
+          <Link
+            href="/admin/members"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all ${
+              pathname === '/admin/members' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white hover:bg-slate-850/50'
+            }`}
+          >
+            <Users className="mr-3 h-5 w-5 text-slate-400" />
+            Members
+          </Link>
 
-        {/* Footer actions */}
-        <div className="p-4 border-t border-slate-800 bg-slate-950/30">
-          <SignOutButton />
+          {/* ID Cards */}
+          <Link
+            href="/admin/id-cards"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all ${
+              pathname === '/admin/id-cards' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white hover:bg-slate-850/50'
+            }`}
+          >
+            <CreditCard className="mr-3 h-5 w-5 text-slate-400" />
+            ID Cards
+          </Link>
+
+          {/* Reports */}
+          <Link
+            href="/admin/reports"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all ${
+              pathname === '/admin/reports' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white hover:bg-slate-850/50'
+            }`}
+          >
+            <BarChart3 className="mr-3 h-5 w-5 text-slate-400" />
+            Reports
+          </Link>
+
+          {/* Settings */}
+          <Link
+            href="/admin/settings"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all ${
+              pathname === '/admin/settings' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-400 hover:text-white hover:bg-slate-850/50'
+            }`}
+          >
+            <Settings className="mr-3 h-5 w-5 text-slate-400" />
+            Settings
+          </Link>
+
+          {/* Divider */}
+          <div className="h-px bg-slate-800 my-2" />
+
+          {/* Log Out */}
+          <div className="pt-1">
+            <SignOutButton />
+          </div>
         </div>
-      </aside>
+      </div>
 
       {/* Main Container */}
       <div className="flex-1 flex flex-col overflow-hidden w-full relative">
