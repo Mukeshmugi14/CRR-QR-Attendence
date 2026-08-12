@@ -144,3 +144,21 @@ export async function updateScoringRules(
     return { success: false, error: error.message };
   }
 }
+
+export async function fetchEventAttendance(eventId: string) {
+  try {
+    await requireAdmin();
+    const supabase = await createClient();
+
+    const { data, error } = await supabase.rpc('get_event_leaderboard', {
+      p_event_id: eventId
+    });
+
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error: any) {
+    console.error('Error fetching event attendance:', error);
+    return { success: false, error: error.message };
+  }
+}
+

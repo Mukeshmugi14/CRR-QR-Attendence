@@ -20,6 +20,7 @@ import {
   Loader2
 } from 'lucide-react';
 import Link from 'next/link';
+import { EventExportExcelButton } from '@/components/leaderboards/EventExportExcelButton';
 
 interface Event {
   id: string;
@@ -334,23 +335,27 @@ export function EventsList({ initialEvents }: EventsListProps) {
                 </div>
 
                 {/* Event Actions Footer */}
-                <div className="mt-5 pt-4 border-t border-slate-850/60 grid grid-cols-2 gap-2 sm:flex sm:items-center sm:justify-between sm:gap-4">
+                <div className="mt-5 pt-4 border-t border-slate-850/60 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4">
                   <button
                     onClick={() => setActiveQrEvent(evt)}
-                    className="inline-flex items-center justify-center sm:justify-start gap-1.5 rounded-lg bg-slate-950 sm:bg-transparent border border-slate-850 sm:border-0 px-3 py-2.5 sm:p-0 text-xs text-slate-400 hover:text-white font-semibold transition-colors"
+                    className="inline-flex items-center justify-center sm:justify-start gap-1.5 rounded-lg bg-slate-950 sm:bg-transparent border border-slate-850 sm:border-0 px-3 py-2 sm:p-0 text-xs text-slate-400 hover:text-white font-semibold transition-colors"
                   >
                     <QrCode className="h-4 w-4 shrink-0" />
                     Fallback QR
                   </button>
 
-                  <Link
-                    href={`/admin/leaderboard/event/${evt.id}`}
-                    className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-950 border border-slate-850 hover:bg-slate-800 px-3 py-2.5 sm:py-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-all"
-                  >
-                    <Trophy className="h-3.5 w-3.5 shrink-0" />
-                    Leaderboard
-                  </Link>
+                  <div className="flex items-center gap-2">
+                    <EventExportExcelButton eventId={evt.id} eventName={evt.name} variant="compact" />
+                    <Link
+                      href={`/admin/leaderboard/event/${evt.id}`}
+                      className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-950 border border-slate-850 hover:bg-slate-800 px-3 py-2 text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-all"
+                    >
+                      <Trophy className="h-3.5 w-3.5 shrink-0" />
+                      Leaderboard
+                    </Link>
+                  </div>
                 </div>
+
               </div>
             );
           })}

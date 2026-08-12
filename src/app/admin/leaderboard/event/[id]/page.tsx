@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/auth';
 import { Trophy, Calendar, Clock, Award, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { EventExportExcelButton } from '@/components/leaderboards/EventExportExcelButton';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -47,25 +48,31 @@ export default async function EventLeaderboardPage({ params }: PageProps) {
   return (
     <div className="space-y-6">
       {/* Header breadcrumb */}
-      <div className="flex items-start gap-3 sm:gap-4 border-b border-slate-800 pb-5">
-        <Link
-          href="/admin/events"
-          className="p-2 rounded-xl bg-slate-900 border border-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors shrink-0"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </Link>
-        <div className="min-w-0">
-          <span className="inline-flex px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 text-[10px] font-extrabold uppercase border border-indigo-500/20 mb-1">
-            Leaderboard
-          </span>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-100 break-words">
-            {event.name}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
-            {new Date(event.event_date).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' })} • {startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+        <div className="flex items-start gap-3 sm:gap-4 min-w-0">
+          <Link
+            href="/admin/events"
+            className="p-2 rounded-xl bg-slate-900 border border-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors shrink-0"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Link>
+          <div className="min-w-0">
+            <span className="inline-flex px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 text-[10px] font-extrabold uppercase border border-indigo-500/20 mb-1">
+              Leaderboard
+            </span>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-100 break-words">
+              {event.name}
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+              {new Date(event.event_date).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' })} • {startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+          <EventExportExcelButton eventId={eventId} eventName={event.name} />
         </div>
       </div>
+
 
       {/* Standings — stacked cards on phones, table from md up */}
       <div className="md:hidden space-y-3">
